@@ -21,7 +21,12 @@
 <script lang="ts">
 import { useStore } from "@/store";
 import { defineComponent } from "vue";
-import { ALTERA_PROJETO, ADICIONA_PROJETO } from "@/store/tipo-mutacoes";
+import {
+  ALTERA_PROJETO,
+  ADICIONA_PROJETO,
+  NOTIFICAR,
+} from "@/store/tipo-mutacoes";
+import { TipoNotificacao } from "@/interfaces/INotificacao";
 
 export default defineComponent({
   name: "Formulario",
@@ -59,6 +64,22 @@ export default defineComponent({
       }
 
       this.nomeDoProjeto = "";
+
+      // const projeto = this.projetos.find((p) => p.id == this.idProjeto);
+      // if (!projeto) {
+      //   this.store.commit(NOTIFICAR, {
+      //     titulo: 'Ops!',
+      //     texto: "Selecione um projeto antes de finalizar a tarefa!",
+      //     tipo: TipoNotificacao.ERRO,
+      //   });
+      //   return;
+      // }
+
+      this.store.commit(NOTIFICAR, {
+        titulo: "Novo projeto foi salvo",
+        texto: "Prontinho ;) seu projeto já está disponível",
+        tipo: TipoNotificacao.SUCESSO,
+      });
       this.$router.push("/projetos");
     },
   },
